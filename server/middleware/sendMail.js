@@ -1,6 +1,8 @@
+import nodemailer from "nodemailer";
+
 const sendMail = async (email, subject, data) => {
   try {
-    const transport = createTransport({
+    const transport = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 465,
       secure: true, // Use SSL
@@ -59,7 +61,7 @@ const sendMail = async (email, subject, data) => {
 
     await transport.sendMail({
       from: process.env.Gmail,
-      to: email, // This ensures the email address is correctly defined
+      to: email,
       subject,
       html,
     });

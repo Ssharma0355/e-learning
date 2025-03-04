@@ -28,10 +28,17 @@ const register = async (req, res) => {
     });
 
     // Save the user to the database
+    console.log("Saving user...");
     await user.save();
+    console.log("User saved successfully.");
 
     // Generate OTP (6 digits)
-    const otp = Math.floor(Math.random() * 1000000);
+    const otp = Math.floor(100000 + Math.random() * 900000); // Ensures a 6-digit OTP
+
+    // Ensure Activation_Secret exists
+    if (!process.env.Activation_Secret) {
+      throw new Error("Activation secret is missing in environment variables.");
+    }
 
     // Create JWT token with OTP, with expiration of 5 minutes
     const activationToken = jwt.sign(
@@ -47,7 +54,12 @@ const register = async (req, res) => {
     };
 
     // Sending OTP email
-    await sendMail(user.email, "E-Learning OTP Verification", data);
+    try {
+      await sendMail(user.email, "E-Learning OTP Verification", data);
+      console.log("Email sent successfully.");
+    } catch (err) {
+      console.error("Email sending failed:", err);
+    }
 
     // Respond with a success message and the user's name
     res.status(200).json({
@@ -55,8 +67,7 @@ const register = async (req, res) => {
       activationToken,
     });
   } catch (error) {
-    // Log error and send proper message
-    console.error(error);
+    console.error("Registration error:", error);
     res.status(500).json({
       message: "Server error: " + error.message,
     });
