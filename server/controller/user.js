@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import sendMail from "../middleware/sendMail.js";
 
-const register = async (req, res) => {
+export const register = async (req, res) => {
   try {
     const { email, name, password } = req.body;
 
@@ -74,4 +74,4 @@ const register = async (req, res) => {
   }
 };
 
-export default register;
+
