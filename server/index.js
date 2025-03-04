@@ -6,8 +6,15 @@ import { connectDb } from "./database/db.js";
 dotenv.config();
 
 const app = express();
+//using middleware
+app.use(express.json());
 
 const port = process.env.PORT;
+
+
+app.get('/',(req,res)=>{
+res.send("Server is running")
+})
 
 app.use('/api',userRoutes);
 
