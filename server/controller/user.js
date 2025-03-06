@@ -116,3 +116,32 @@ export const verifyUser = TryCatch(async (req, res) => {
     res.status(500).json({ message: "Server error: " + error.message });
   }
 });
+
+
+export const loginUser = TryCatch(async(req,res)=>{
+  const {email,password} = req.body;
+  const user = await User.findOne({email});
+  if(!user) return res.status(400).json({
+    message:"No user with this email"
+  });
+  const matchPassword = await bcrypt.compare(password,user.password);
+  if(!matchPassword) return res.status(400).json({
+    message: "Incorrect Password",
+  });
+
+  const token = await jwt.sign({
+    _id:user._id,
+  },
+  process.env.Jwt_Secret,{
+    expiresIn:"15d",
+
+  }
+);
+res.json({
+  message:`Welcome back ${user.name}`,
+  token,
+  user,
+
+})
+  
+})
