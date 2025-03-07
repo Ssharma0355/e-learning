@@ -2,6 +2,8 @@ import express from "express";
 import dotenv from "dotenv";
 import userRoutes from "./routes/user.js"
 import { connectDb } from "./database/db.js";
+import coursesRoute from "./routes/course.js";
+import adminRoute from "./routes/admin.js"
 
 dotenv.config();
 
@@ -17,6 +19,10 @@ res.send("Server is running")
 })
 
 app.use('/api',userRoutes);
+app.use("/api", coursesRoute);
+app.use("/api", adminRoute);
+
+
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
