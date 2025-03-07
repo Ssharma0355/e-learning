@@ -18,6 +18,7 @@ app.get('/',(req,res)=>{
 res.send("Server is running")
 })
 
+//setting up routes
 app.use('/api',userRoutes);
 app.use("/api", coursesRoute);
 app.use("/api", adminRoute);
