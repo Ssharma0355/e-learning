@@ -145,3 +145,8 @@ res.json({
 })
   
 })
+
+export  const myProfile = TryCatch(async(req,res)=>{
+  const user = await User.findById(req.user._id);//need middleware for this 
+  res.json({user});
+})
