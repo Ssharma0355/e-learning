@@ -14,7 +14,7 @@ export const isAuth = async (req, res, next) => {
     next();
   } catch (error) {
     res.status(500).json({
-      messsage: "User is not logged In",
+      message: "User is not logged In",
     });
   }
 };
