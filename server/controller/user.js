@@ -124,7 +124,7 @@ export const loginUser = TryCatch(async(req,res)=>{
   if(!user) return res.status(400).json({
     message:"No user with this email"
   });
-  const matchPassword = await bcrypt.compare(password,user.password);
+  const matchPassword = await bcrypt.compare(password, user.password);
   if(!matchPassword) return res.status(400).json({
     message: "Incorrect Password",
   });

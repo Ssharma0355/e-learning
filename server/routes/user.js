@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post("/user/register", register);
 router.post("/user/verify",verifyUser);
-router.post("user/login",loginUser)
+router.post("/user/login",loginUser)
 
 
 
